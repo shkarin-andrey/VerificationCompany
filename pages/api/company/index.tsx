@@ -1,32 +1,13 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
+import { ListCompanyData } from "../../../util/interface/listCompany";
 import { listCompany } from "../data/listCompany";
-
-interface Data {
-  company: ListCompanyInterface[];
-  count: number;
-}
-
-export interface ListCompanyInterface {
-  id: string;
-  title: string;
-  description: string;
-  dateRedistr?: string;
-  priceTop?: string;
-  priceBottom?: string;
-  action: string;
-  user: string;
-  people?: string;
-  legalAction?: string[];
-}
 
 export default function company(
   req: NextApiRequest,
-  res: NextApiResponse<Data>
+  res: NextApiResponse<ListCompanyData>
 ) {
   const { page, limit } = req.query;
-
-  console.log(typeof listCompany);
 
   const limitCards = Number(limit) || 20;
   const offset = Number(limitCards) * Number(page);
