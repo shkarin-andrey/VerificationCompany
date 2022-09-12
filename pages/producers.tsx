@@ -4,8 +4,12 @@ import Card from "../components/Card/Card";
 import { Pagination } from "flowbite-react";
 import axios from "axios";
 import { useRouter } from "next/router";
+import {
+  ListCompanyData,
+  ListCompanyInterface,
+} from "../util/interface/listCompany";
 
-const Producers: NextPage = ({ company, count }: any) => {
+const Producers: NextPage<ListCompanyData> = ({ company = [], count = 1 }) => {
   const router = useRouter();
 
   const [page, setPage] = useState(router.query.page || 1);
@@ -15,7 +19,7 @@ const Producers: NextPage = ({ company, count }: any) => {
     router.push({
       query: { page, limit },
     });
-  }, [page]);
+  }, [page, limit]);
 
   const onPageChange = (targetPage: number) => {
     setPage(targetPage);
@@ -31,11 +35,13 @@ const Producers: NextPage = ({ company, count }: any) => {
         totalPages={count}
       />
       <div className="grid grid-cols-4 gap-5">
-        {company.map((card: any) => (
+        {company.map((card: ListCompanyInterface) => (
           <Card
             key={card.id}
             title={card.title}
             description={card.description}
+            priceTop={card.priceTop}
+            priceBottom={card.priceBottom}
           />
         ))}
       </div>

@@ -3,14 +3,14 @@ export interface ListCompanyData {
   count: number;
 }
 
-interface ListCompanyInterface {
+export interface ListCompanyInterface {
   id: string;
   title: string;
   description: string;
   dateRedistr?: string;
   priceTop?: string;
   priceBottom?: string;
-  action: string;
+  action?: string;
   user: {
     userName?: string;
     userProfession?: string;

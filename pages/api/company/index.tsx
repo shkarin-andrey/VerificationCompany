@@ -7,14 +7,16 @@ export default function company(
   req: NextApiRequest,
   res: NextApiResponse<ListCompanyData>
 ) {
-  const { page, limit } = req.query;
+  const page = Number(req.query.page) || 1;
+  const limit = Number(req.query.limit) || 20;
 
-  const limitCards = Number(limit) || 20;
-  const offset = Number(limitCards) * Number(page);
-  const count = Math.floor(listCompany.length / limitCards);
+  const startIndex = (page - 1) * limit;
+  const endIndex = page * limit;
+
+  const count = Math.floor(listCompany.length / limit);
 
   if (page) {
-    const company = listCompany.splice(offset, limitCards);
+    const company = listCompany.slice(startIndex, endIndex);
 
     return res.status(200).json({
       company,
