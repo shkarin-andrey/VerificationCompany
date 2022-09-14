@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 import { ListCompanyData } from "../../../util/interface/listCompany";
-import { listCompany } from "../data/listCompany";
+import { listCompany } from "../../../data/listCompany.json";
 
 export default function company(
   req: NextApiRequest,
@@ -15,17 +15,10 @@ export default function company(
 
   const count = Math.floor(listCompany.length / limit);
 
-  if (page) {
-    const company = listCompany.slice(startIndex, endIndex);
-
-    return res.status(200).json({
-      company,
-      count,
-    });
-  }
+  const company = listCompany.slice(startIndex, endIndex);
 
   return res.status(200).json({
-    company: listCompany,
+    company,
     count,
   });
 }
