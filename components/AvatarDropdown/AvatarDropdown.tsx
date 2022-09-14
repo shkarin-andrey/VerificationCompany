@@ -12,8 +12,9 @@ const AvatarDropdown: FC<iAvatarDropdown> = ({ user }) => {
   const auth = getAuth();
 
   const handleLogout = async () => {
-    await signOut(auth);
-    dispatch(logout());
+    await signOut(auth)
+      .then(() => dispatch(logout()))
+      .catch((e) => console.error(e));
   };
 
   const handleAvatarClick = () => {

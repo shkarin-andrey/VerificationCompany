@@ -70,10 +70,12 @@ const Producers: NextPage<ListCompanyData> = ({ company = [], count = 1 }) => {
   );
 };
 
-export async function getServerSideProps(context: GetServerSidePropsContext) {
+export const getServerSideProps = async (
+  context: GetServerSidePropsContext
+) => {
   const { page, limit } = context.query;
 
-  const res = await axios(`${process.env.REACT_APP_BASE_URL}/company`, {
+  const res = await axios(`${process.env.BASE_URL_API}/company`, {
     params: {
       page: page ? page : 1,
       limit: limit ? limit : 20,
@@ -82,6 +84,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const data = await res.data;
 
   return { props: { company: data.company, count: data.count } };
-}
+};
 
 export default Producers;

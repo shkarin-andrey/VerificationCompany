@@ -1,12 +1,14 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 import { ListCompanyData } from "../../../util/interface/listCompany";
-import { listCompany } from "../../../data/listCompany.json";
+import data from "../../../data/listCompany.json";
 
 export default function company(
   req: NextApiRequest,
   res: NextApiResponse<ListCompanyData>
 ) {
+  const listCompany = data.listCompany;
+
   const page = Number(req.query.page) || 1;
   const limit = Number(req.query.limit) || 20;
 
