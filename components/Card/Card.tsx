@@ -4,15 +4,21 @@ import Image from "next/image";
 import noImg from "/public/no-image.png";
 import { CardProps } from "./Card.interface";
 
-const Card: FC<CardProps> = ({ title, description, priceTop, priceBottom }) => {
+const Card: FC<CardProps> = ({
+  title,
+  description,
+  priceTop,
+  priceBottom,
+  href,
+}) => {
   return (
-    <div className="flex rounded-lg border border-gray-200 bg-white shadow-md dark:border-gray-700 dark:bg-gray-800 flex-col">
-      <Link href="#">
+    <div className="rounded-lg border border-gray-200 bg-white shadow-md dark:border-gray-700 dark:bg-gray-800 w-full">
+      <Link href={href}>
         <a>
           <div className="relative h-[200px] w-full">
             <Image src={noImg} alt={title} layout="fill" />
           </div>
-          <div className="flex flex-col gap-4 p-6">
+          <div className="flex flex-col gap-4 px-3 py-5 sm:p-5">
             <h2 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
               {title}
             </h2>

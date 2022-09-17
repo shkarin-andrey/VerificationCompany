@@ -3,4 +3,5 @@ export interface CardProps {
   description: string;
   priceTop?: string;
   priceBottom?: string;
+  href: string;
 }
