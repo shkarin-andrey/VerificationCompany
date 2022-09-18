@@ -109,7 +109,7 @@ export const getServerSideProps = async (
 ) => {
   const { page, limit, search } = context.query;
 
-  const res = await axios(`${process.env.BASE_URL_API}/company`, {
+  const res = await axios(`${process.env.NEXT_PUBLIC_BASE_URL_API}/company`, {
     params: {
       page: page ? page : 1,
       limit: limit ? limit : 20,

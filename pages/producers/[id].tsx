@@ -18,7 +18,9 @@ export const getServerSideProps = async (
 ) => {
   const { id } = context.query;
 
-  const res = await axios(`${process.env.BASE_URL_API}/company/${id}`);
+  const res = await axios(
+    `${process.env.NEXT_PUBLIC_BASE_URL_API}/company/${id}`
+  );
   const data = await res.data;
 
   return { props: { company: data.company } };
