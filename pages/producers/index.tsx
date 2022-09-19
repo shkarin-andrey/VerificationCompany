@@ -94,6 +94,10 @@ const Producers: NextPage<ListCompanyData> = ({ company, count = 1 }) => {
               priceTop={card.priceTop}
               priceBottom={card.priceBottom}
               href={`producers/${card.id}`}
+              dateRegistr={card.dateRedistr}
+              userName={card.user.userName}
+              userProfession={card.user.userProfession}
+              people={card.people}
             />
           ))
         ) : (

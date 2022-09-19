@@ -10,6 +10,10 @@ const Card: FC<CardProps> = ({
   priceTop,
   priceBottom,
   href,
+  dateRegistr,
+  userName,
+  userProfession,
+  people,
 }) => {
   return (
     <div className="rounded-lg border border-gray-200 bg-white shadow-md dark:border-gray-700 dark:bg-gray-800 w-full">
@@ -25,18 +29,37 @@ const Card: FC<CardProps> = ({
             <p className="text-sm text-gray-600 text-ellipsis overflow-hidden max-h-[100px]">
               {description}
             </p>
+            {dateRegistr && (
+              <div className="text-sm text-gray-600 text-ellipsis overflow-hidden">
+                {dateRegistr}
+              </div>
+            )}
+            {people && (
+              <div className="text-sm text-gray-600 text-ellipsis overflow-hidden">
+                Персонал:
+                <span className="text-blue-400 font-medium text-lg">
+                  {people}
+                </span>
+              </div>
+            )}
             {priceTop && (
-              <span>
-                Заработали:{" "}
+              <div className="text-sm">
+                Прибыль:{" "}
                 <span className="text-green-600 font-medium">{priceTop}</span>
-              </span>
+              </div>
             )}
             {priceBottom && (
-              <span>
-                Потратили:{" "}
+              <div className="text-sm">
+                Убытки:{" "}
                 <span className="text-red-600 font-medium">{priceBottom}</span>
-              </span>
+              </div>
             )}
+            <div className="flex flex-col">
+              {userName && <div className="text-sm">{userName}</div>}
+              {userProfession && (
+                <div className="text-sm text-gray-600">{userProfession}</div>
+              )}
+            </div>
           </div>
         </a>
       </Link>
