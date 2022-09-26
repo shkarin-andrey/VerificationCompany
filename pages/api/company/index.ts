@@ -14,7 +14,9 @@ export default function company(
   const search = req.query.search;
 
   const searchComapny = () => {
+    // @ts-ignore
     return data.filter((item: ListCompanyInterface) => {
+      // @ts-ignore
       const name = item.title.toLowerCase().search(search);
 
       if (name !== -1) {

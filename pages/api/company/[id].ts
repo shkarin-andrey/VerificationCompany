@@ -7,6 +7,7 @@ export default function findCompany(
   res: NextApiResponse<any>
 ) {
   const id = req.query.id;
+  // @ts-ignore
   const company = data.find((item: ListCompanyInterface) => item.id === id);
 
   return res.status(200).json({
