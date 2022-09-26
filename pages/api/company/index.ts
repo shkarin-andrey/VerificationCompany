@@ -1,6 +1,8 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
-import { ListCompanyData } from "../../../util/interface/listCompany";
+import {
+  ListCompanyData,
+  ListCompanyInterface,
+} from "../../../util/interface/listCompany";
 import data from "../../../data/listCompany.json";
 
 export default function company(
@@ -12,7 +14,7 @@ export default function company(
   const search = req.query.search;
 
   const searchComapny = () => {
-    return data.listCompany.filter((item: any) => {
+    return data.filter((item: ListCompanyInterface) => {
       const name = item.title.toLowerCase().search(search);
 
       if (name !== -1) {
@@ -21,7 +23,7 @@ export default function company(
     });
   };
 
-  const listCompany = search ? searchComapny() : data.listCompany;
+  const listCompany = search ? searchComapny() : data;
 
   const startIndex = (page - 1) * limit;
   const endIndex = page * limit;

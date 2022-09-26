@@ -90,14 +90,10 @@ const Producers: NextPage<ListCompanyData> = ({ company, count = 1 }) => {
             <Card
               key={card.id}
               title={card.title}
-              description={card.description}
-              priceTop={card.priceTop}
-              priceBottom={card.priceBottom}
-              href={`producers/${card.id}`}
-              dateRegistr={card.dateRedistr}
-              userName={card.user.userName}
-              userProfession={card.user.userProfession}
-              people={card.people}
+              href={`/producers/${card.id}`}
+              expense={Number(card.finance.expense)}
+              income={Number(card.finance.income)}
+              OKVED={card.companyInfo.OKVED}
             />
           ))
         ) : (

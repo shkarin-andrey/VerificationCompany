@@ -6,15 +6,23 @@ export interface ListCompanyData {
 export interface ListCompanyInterface {
   id: string;
   title: string;
-  description: string;
-  dateRedistr?: string;
-  priceTop?: string;
-  priceBottom?: string;
-  action?: string;
+  INN: string[];
   user: {
     userName?: string;
     userProfession?: string;
   };
-  people?: string;
-  legalAction?: string[];
+  companyInfo: {
+    NGEE: string[];
+    address: {
+      legalAddress: string;
+      actualAddress: string;
+      streetAddress: string;
+    };
+    OKVED: string;
+    littleName: string;
+    fullName: string;
+    phones?: string;
+    site?: string;
+  };
+  finance: { income?: string; expense?: string };
 }
