@@ -3,7 +3,7 @@ import { GetServerSidePropsContext, NextPage } from "next";
 import Card from "../../components/Card/Card";
 import { Button, TextInput } from "flowbite-react";
 import axios from "axios";
-import Router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import {
   ListCompanyData,
   ListCompanyInterface,
@@ -23,6 +23,7 @@ const Producers: NextPage<ListCompanyData> = ({ company, count }) => {
   const dispatch = useAppDispatch();
   const { search } = useAppSelector((state) => state.producers);
 
+  const [deleted, setDeleted] = useState(false);
   const [value, setValue] = useState("");
   const [timer, setTimer] = useState<ReturnType<typeof setTimeout> | null>(
     null
@@ -40,7 +41,9 @@ const Producers: NextPage<ListCompanyData> = ({ company, count }) => {
     router.push({
       query,
     });
-  }, [limit, page, search]);
+
+    setDeleted(false);
+  }, [limit, page, search, deleted]);
 
   const inputSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const search = e.target.value;
@@ -104,6 +107,7 @@ const Producers: NextPage<ListCompanyData> = ({ company, count }) => {
               income={Number(card.finance.income)}
               OKVED={card.companyInfo.OKVED}
               logo={card.logo}
+              setDeleted={setDeleted}
             />
           ))
         ) : (

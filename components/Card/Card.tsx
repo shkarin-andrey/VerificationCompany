@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { CardProps } from "./Card.interface";
 import { Button } from "flowbite-react";
+import axios from "axios";
 
 const Card: FC<CardProps> = ({
   id,
@@ -12,6 +13,7 @@ const Card: FC<CardProps> = ({
   income,
   OKVED,
   logo,
+  setDeleted,
 }) => {
   const logoCompany = logo.split("/").slice(-1).join("");
   const pathLogoCompany = require(`../../public/assets/logo/${logoCompany}`);
@@ -20,8 +22,16 @@ const Card: FC<CardProps> = ({
     console.log("edit " + id);
   };
 
-  const deleteCard = () => {
-    console.log("delete " + id);
+  const deleteCard = async () => {
+    const res = await axios({
+      url: `/api/company/delete`,
+      method: "DELETE",
+      data: { id },
+    });
+
+    if (res.status === 200) {
+      setDeleted(true);
+    }
   };
 
   return (

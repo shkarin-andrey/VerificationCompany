@@ -6,4 +6,5 @@ export interface CardProps {
   income?: number;
   OKVED: string;
   logo: string;
+  setDeleted: (e: boolean) => void;
 }

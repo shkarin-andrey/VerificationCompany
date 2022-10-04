@@ -34,7 +34,7 @@ export default async function company(
       success: true,
     });
   } catch (error) {
-    return res.json({
+    return res.status(400).json({
       message: new Error(error as any).message,
       success: false,
     });
