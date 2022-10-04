@@ -4,7 +4,7 @@ export interface ListCompanyData {
 }
 
 export interface ListCompanyInterface {
-  id: string;
+  _id: string;
   title: string;
   INN: string[] | null;
   user: User;

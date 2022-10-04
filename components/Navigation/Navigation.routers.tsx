@@ -1,6 +1,6 @@
 export const links = [
   {
-    href: "/producers",
+    href: "/company",
     value: "Приозводители",
   },
   {
