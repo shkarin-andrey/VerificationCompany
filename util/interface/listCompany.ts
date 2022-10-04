@@ -10,6 +10,7 @@ export interface ListCompanyInterface {
   user: User;
   companyInfo: CompanyInfo;
   finance: Finance;
+  logo: string;
 }
 
 export interface CompanyInfo {
@@ -36,4 +37,5 @@ export interface Finance {
 export interface User {
   userName?: string;
   userProfession?: string;
+  userAvatar: string;
 }

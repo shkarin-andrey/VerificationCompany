@@ -2,7 +2,7 @@ import { NextPage } from "next";
 import Image from "next/image";
 import React from "react";
 import { useAppSelector } from "../../hooks/useAppSelector";
-import noImg from "/public/no-avatar.png";
+import noImg from "../../public/assets/avatars/no-avatar.png";
 import { useRouter } from "next/router";
 import { Sidebar, Badge } from "flowbite-react";
 
