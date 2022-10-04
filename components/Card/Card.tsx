@@ -2,13 +2,30 @@ import React, { FC } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { CardProps } from "./Card.interface";
+import { Button } from "flowbite-react";
 
-const Card: FC<CardProps> = ({ title, href, expense, income, OKVED, logo }) => {
+const Card: FC<CardProps> = ({
+  id,
+  title,
+  href,
+  expense,
+  income,
+  OKVED,
+  logo,
+}) => {
   const logoCompany = logo.split("/").slice(-1).join("");
   const pathLogoCompany = require(`../../public/assets/logo/${logoCompany}`);
 
+  const editCard = () => {
+    console.log("edit " + id);
+  };
+
+  const deleteCard = () => {
+    console.log("delete " + id);
+  };
+
   return (
-    <div className="rounded-lg border border-gray-200 bg-white shadow-md dark:border-gray-700 dark:bg-gray-800 w-full">
+    <div className="rounded-lg border border-gray-200 bg-white shadow-md dark:border-gray-700 dark:bg-gray-800 w-full overflow-hidden">
       <Link href={href}>
         <a>
           <div className="relative h-[200px] w-full">
@@ -42,6 +59,15 @@ const Card: FC<CardProps> = ({ title, href, expense, income, OKVED, logo }) => {
           </div>
         </a>
       </Link>
+      <div className="flex flex-col px-3 py-5">
+        <hr />
+        <div className="flex gap-5 justify-between mt-5">
+          <Button onClick={editCard}>Редактировать</Button>
+          <Button onClick={deleteCard} color="failure">
+            Удалить
+          </Button>
+        </div>
+      </div>
     </div>
   );
 };

@@ -1,41 +1,42 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import {
-  ListCompanyData,
-  ListCompanyInterface,
-} from "../../../util/interface/listCompany";
-import data from "../../../data/listCompany.json";
+import { connectToDatabase } from "../../../util/mongodb";
 
-export default function company(
+export default async function company(
   req: NextApiRequest,
-  res: NextApiResponse<ListCompanyData>
+  res: NextApiResponse
 ) {
-  const page = Number(req.query.page);
-  const limit = Number(req.query.limit);
-  const search = req.query.search;
+  try {
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.limit) || 20;
+    const search = req.query.search;
 
-  const searchComapny = () => {
-    // @ts-ignore
-    return data.filter((item: ListCompanyInterface) => {
-      // @ts-ignore
-      const name = item.title.toLowerCase().search(search);
+    const skip = (page - 1) * limit;
 
-      if (name !== -1) {
-        return item;
-      }
+    const isSearch = () => (search ? { $text: { $search: search } } : {});
+
+    const { db } = await connectToDatabase();
+    const collection = db.collection("company");
+
+    collection.createIndex({ title: "text" });
+
+    const [company, count] = await Promise.all([
+      collection.find(isSearch()).skip(skip).limit(limit).toArray(),
+
+      collection.find(isSearch()).count(),
+    ]);
+
+    return res.json({
+      data: {
+        company,
+        count: Math.ceil(count / limit),
+      },
+      message: "Компании успешно загруженны",
+      success: true,
     });
-  };
-
-  const listCompany = search ? searchComapny() : data;
-
-  const startIndex = (page - 1) * limit;
-  const endIndex = page * limit;
-
-  const count = Math.floor(listCompany.length / limit);
-
-  const company = listCompany.slice(startIndex, endIndex);
-
-  return res.status(200).json({
-    company,
-    count,
-  });
+  } catch (error) {
+    return res.json({
+      message: new Error(error as any).message,
+      success: false,
+    });
+  }
 }

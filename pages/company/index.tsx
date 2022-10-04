@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { GetServerSidePropsContext, NextPage } from "next";
 import Card from "../../components/Card/Card";
-import { TextInput } from "flowbite-react";
+import { Button, TextInput } from "flowbite-react";
 import axios from "axios";
-import { useRouter } from "next/router";
+import Router, { useRouter } from "next/router";
 import {
   ListCompanyData,
   ListCompanyInterface,
@@ -14,8 +14,9 @@ import useMediaQuery from "../../hooks/useMediaQuery";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import { searchFilter } from "../../redux/reducers/producersSlice";
+import Link from "next/link";
 
-const Producers: NextPage<ListCompanyData> = ({ company, count = 1 }) => {
+const Producers: NextPage<ListCompanyData> = ({ company, count }) => {
   const router = useRouter();
   const matches = useMediaQuery("(min-width: 640px)");
 
@@ -34,7 +35,7 @@ const Producers: NextPage<ListCompanyData> = ({ company, count = 1 }) => {
   const marginPagesDisplayed = matches ? 3 : 1;
 
   useEffect(() => {
-    const query = { page, limit, search };
+    const query = search.length < 3 ? { page, limit } : { page, limit, search };
 
     router.push({
       query,
@@ -58,10 +59,18 @@ const Producers: NextPage<ListCompanyData> = ({ company, count = 1 }) => {
 
   return (
     <div className="container mx-auto px-2 sm:px-4">
-      <div className="flex gap-2 items-center mt-5 mb-5">
-        <div className="rounded bg-blue-600 w-4 h-4"></div>
-        <h1 className="font-bold text-2xl">Производители</h1>
+      <div className="flex items-center justify-between">
+        <div className="flex gap-2 items-center mt-5 mb-5">
+          <div className="rounded bg-blue-600 w-4 h-4"></div>
+          <h1 className="font-bold text-2xl">Производители</h1>
+        </div>
+        <Link href={"company/create"}>
+          <a>
+            <Button>Добавить компанию</Button>
+          </a>
+        </Link>
       </div>
+
       <div className="flex justify-between items-center flex-col lg:flex-row gap-4">
         <TextInput
           placeholder="Введите название компании..."
@@ -87,9 +96,10 @@ const Producers: NextPage<ListCompanyData> = ({ company, count = 1 }) => {
         {company ? (
           company.map((card: ListCompanyInterface) => (
             <Card
-              key={card.id}
+              key={card._id}
+              id={card._id}
               title={card.title}
-              href={`/producers/${card.id}`}
+              href={`/company/${card._id}`}
               expense={Number(card.finance.expense)}
               income={Number(card.finance.income)}
               OKVED={card.companyInfo.OKVED}
@@ -127,7 +137,7 @@ export const getServerSideProps = async (
       search,
     },
   });
-  const data = await res.data;
+  const { data } = await res.data;
 
   return { props: { company: data.company, count: data.count } };
 };

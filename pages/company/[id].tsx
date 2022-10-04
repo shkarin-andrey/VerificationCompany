@@ -4,9 +4,7 @@ import axios from "axios";
 import { ListCompanyInterface } from "../../util/interface/listCompany";
 import { Avatar } from "flowbite-react";
 
-const Producers: NextPage<{ company: ListCompanyInterface }> = ({
-  company,
-}) => {
+const Company: NextPage<{ company: ListCompanyInterface }> = ({ company }) => {
   const avatarUserCompany = company.user.userAvatar
     .split("/")
     .slice(-1)
@@ -56,26 +54,26 @@ const Producers: NextPage<{ company: ListCompanyInterface }> = ({
               руб.
             </div>
           </div>
-          <div className="grid grid-cols-2 col-span-2">
-            <div>Направления в структуре НГЭЭ:</div>
+          <div className="grid gap-3 sm:gap-5 lg:grid-cols-2 lg:col-span-2">
+            <div className="font-bold">Направления в структуре НГЭЭ:</div>
             <div>
               {company.companyInfo.NGEE.map((item, i) => (
                 <div key={`ngee-${i}`}>{item}</div>
               ))}
             </div>
-            <div>Основной вид деятельности (ОКВЭД):</div>
+            <div className="font-bold">Основной вид деятельности (ОКВЭД):</div>
             <div className="font-medium">{company.companyInfo.OKVED}</div>
-            <div>Сокращенное наименование:</div>
+            <div className="font-bold">Сокращенное наименование:</div>
             <div>{company.companyInfo.littleName}</div>
-            <div>Полное наименование:</div>
+            <div className="font-bold">Полное наименование:</div>
             <div>{company.companyInfo.fullName}</div>
-            <div>Юридический адрес:</div>
+            <div className="font-bold">Юридический адрес:</div>
             <div>{company.companyInfo.address.legalAddress}</div>
-            <div>Фактический адрес:</div>
+            <div className="font-bold">Фактический адрес:</div>
             <div>{company.companyInfo.address.actualAddress}</div>
-            <div>Почтовый адрес:</div>
+            <div className="font-bold">Почтовый адрес:</div>
             <div>{company.companyInfo.address.streetAddress}</div>
-            <div>Телефон:</div>
+            <div className="font-bold">Телефоны:</div>
             <div className="flex flex-col">
               {company.companyInfo.phones?.split(", ").map((item, i) => (
                 <a
@@ -87,7 +85,7 @@ const Producers: NextPage<{ company: ListCompanyInterface }> = ({
                 </a>
               )) || "-"}
             </div>
-            <div>Web-сайт:</div>
+            <div className="font-bold">Web-сайты:</div>
             <a
               href={`https://${company.companyInfo.site}`}
               className="font-medium hover:text-blue-500 transition-colors"
@@ -110,9 +108,9 @@ export const getServerSideProps = async (
   const { id } = context.query;
 
   const res = await axios(`${process.env.BASE_URL_API}/company/${id}`);
-  const { company } = await res.data;
+  const { data } = await res.data;
 
-  return { props: { company } };
+  return { props: { company: data.company } };
 };
 
-export default Producers;
+export default Company;
