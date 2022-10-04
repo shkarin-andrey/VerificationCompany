@@ -5,10 +5,12 @@ import { PaginationProps } from "./Pagination.interface";
 const Pagination: FC<PaginationProps> = ({
   setPage,
   pageCount,
-  pageRangeDisplayed = 2,
+  pageRangeDisplayed,
+  marginPagesDisplayed,
+  forcePage,
 }) => {
   const onPageChange = (selectedItem: { selected: number }) => {
-    setPage(selectedItem.selected + 1);
+    setPage(selectedItem.selected);
   };
 
   return (
@@ -17,7 +19,9 @@ const Pagination: FC<PaginationProps> = ({
         breakLabel="..."
         nextLabel=">"
         onPageChange={onPageChange}
+        forcePage={forcePage}
         pageRangeDisplayed={pageRangeDisplayed}
+        marginPagesDisplayed={marginPagesDisplayed}
         pageCount={pageCount}
         previousLabel="<"
         className={"flex items-center"}
@@ -27,13 +31,13 @@ const Pagination: FC<PaginationProps> = ({
           "bg-blue-500 text-white hover:text-white rounded-lg shadow shadow-blue-500 transition-colors duration-500"
         }
         pageLinkClassName={
-          "flex justify-center items-center px-2 py-1 text-xs sm:text-base"
+          "flex justify-center items-center px-2 py-1 text-xs text-base"
         }
         previousLinkClassName={
-          "flex justify-center items-center sm:px-2 sm:py-1 hover:text-blue-500"
+          "flex justify-center items-center px-2 py-1 hover:text-blue-500"
         }
         nextLinkClassName={
-          "flex justify-center items-center sm:px-2 sm:py-1 hover:text-blue-500"
+          "flex justify-center items-center px-2 py-1 hover:text-blue-500"
         }
         breakLinkClassName={
           "flex justify-center items-end sm:px-2 sm:py-1 hover:text-blue-500"

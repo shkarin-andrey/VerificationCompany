@@ -8,7 +8,7 @@ import {
   ListCompanyData,
   ListCompanyInterface,
 } from "../../util/interface/listCompany";
-import Search from "../../assets/Search";
+import Search from "../../public/assets/Search";
 import Pagination from "../../components/Pagination/Pagination";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
@@ -30,19 +30,16 @@ const Producers: NextPage<ListCompanyData> = ({ company, count = 1 }) => {
   const [page, setPage] = useState(router.query.page || 1);
   const [limit, setLimit] = useState(router.query.limit || 20);
 
-  const pageRangeDisplayed = matches ? 5 : 2;
+  const pageRangeDisplayed = matches ? 5 : 3;
+  const marginPagesDisplayed = matches ? 3 : 1;
 
   useEffect(() => {
-    if (search.length < 3) {
-      router.push({
-        query: { page, limit },
-      });
-    } else {
-      router.push({
-        query: { page, limit, search },
-      });
-    }
-  }, [page, limit, search]);
+    const query = { page, limit, search };
+
+    router.push({
+      query,
+    });
+  }, [limit, page, search]);
 
   const inputSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const search = e.target.value;
@@ -78,8 +75,10 @@ const Producers: NextPage<ListCompanyData> = ({ company, count = 1 }) => {
         {count > 1 && (
           <Pagination
             setPage={setPage}
+            forcePage={+page}
             pageCount={count}
             pageRangeDisplayed={pageRangeDisplayed}
+            marginPagesDisplayed={marginPagesDisplayed}
           />
         )}
       </div>
@@ -94,12 +93,24 @@ const Producers: NextPage<ListCompanyData> = ({ company, count = 1 }) => {
               expense={Number(card.finance.expense)}
               income={Number(card.finance.income)}
               OKVED={card.companyInfo.OKVED}
+              logo={card.logo}
             />
           ))
         ) : (
           <div>Список производителей пуст</div>
         )}
       </div>
+      {count > 1 && (
+        <div className="flex justify-end mb-10">
+          <Pagination
+            setPage={setPage}
+            forcePage={+page}
+            pageCount={count}
+            pageRangeDisplayed={pageRangeDisplayed}
+            marginPagesDisplayed={marginPagesDisplayed}
+          />
+        </div>
+      )}
     </div>
   );
 };

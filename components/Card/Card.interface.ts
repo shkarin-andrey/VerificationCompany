@@ -4,4 +4,5 @@ export interface CardProps {
   expense?: number;
   income?: number;
   OKVED: string;
+  logo: string;
 }

@@ -7,26 +7,29 @@ import { Avatar } from "flowbite-react";
 const Producers: NextPage<{ company: ListCompanyInterface }> = ({
   company,
 }) => {
+  const avatarUserCompany = company.user.userAvatar
+    .split("/")
+    .slice(-1)
+    .join("");
+  const pathAvatarUserCompany = require(`../../public/assets/avatars/${avatarUserCompany}`);
+
   return (
     <div className="container mx-auto px-2 sm:px-4">
-      <div className="flex gap-2 items-center mt-5 mb-5">
-        <div className="rounded bg-blue-600 w-4 h-4"></div>
-        <div className="flex gap-4 font-bold text-2xl">
+      <div className="flex flex-col sm:flex-row items-center gap-4 mt-5 mb-5 font-bold text-2xl">
+        <div className="flex items-center gap-2 text-center">
+          <div className="rounded bg-blue-600 w-4 h-4"></div>
           <h1>{company.title}</h1>
-          <h2 className="text-blue-600">ИНН: {company.INN}</h2>
         </div>
+        <h2 className="text-blue-600">ИНН: {company.INN}</h2>
       </div>
       <div className="flex flex-col">
         <h2 className="text-center font-bold text-2xl text-gray-600 my-5">
           Основная имнформация
         </h2>
-        <div className="grid grid-cols-4 gap-5">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
           <div>
             <div className="flex justify-center">
-              <Avatar
-                img="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-                size="xl"
-              />
+              <Avatar img={pathAvatarUserCompany.default.src} size="xl" />
             </div>
             <div className="text-lg font-bold text-center">
               {company.user.userName}
