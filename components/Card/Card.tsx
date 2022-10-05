@@ -4,6 +4,9 @@ import Image from "next/image";
 import { CardProps } from "./Card.interface";
 import { Button } from "flowbite-react";
 import axios from "axios";
+import { useRouter } from "next/router";
+import DeleteModal from "../Modal/Delete";
+import noLogo from "../../public/assets/logo/no-image.png";
 
 const Card: FC<CardProps> = ({
   id,
@@ -15,11 +18,19 @@ const Card: FC<CardProps> = ({
   logo,
   setDeleted,
 }) => {
-  const logoCompany = logo.split("/").slice(-1).join("");
-  const pathLogoCompany = require(`../../public/assets/logo/${logoCompany}`);
+  const router = useRouter();
+
+  const logoCompany = logo?.split("/").slice(-1).join("");
+  const pathLogoCompany = () => {
+    if (logoCompany) {
+      return require(`/public/assets/logo/${logoCompany}`);
+    }
+
+    return;
+  };
 
   const editCard = () => {
-    console.log("edit " + id);
+    router.push(`/company/${id}/edit`);
   };
 
   const deleteCard = async () => {
@@ -40,7 +51,7 @@ const Card: FC<CardProps> = ({
         <a>
           <div className="relative h-[200px] w-full">
             <Image
-              src={pathLogoCompany.default.src}
+              src={pathLogoCompany()?.default.src || noLogo}
               alt={title}
               layout="fill"
             />
@@ -52,14 +63,14 @@ const Card: FC<CardProps> = ({
             <div className="text-gray-500">{OKVED}</div>
             <div className="flex flex-col">
               <div>
-                Прибыль:{" "}
+                Доход:{" "}
                 <span className="font-medium text-green-600">
                   {new Intl.NumberFormat().format(income || 0)}
                 </span>{" "}
                 руб.
               </div>
               <div>
-                Убыток:{" "}
+                Расход:{" "}
                 <span className="font-medium text-red-600">
                   {new Intl.NumberFormat().format(expense || 0)}
                 </span>{" "}
@@ -73,9 +84,7 @@ const Card: FC<CardProps> = ({
         <hr />
         <div className="flex gap-5 justify-between mt-5">
           <Button onClick={editCard}>Редактировать</Button>
-          <Button onClick={deleteCard} color="failure">
-            Удалить
-          </Button>
+          <DeleteModal onOk={deleteCard} />
         </div>
       </div>
     </div>

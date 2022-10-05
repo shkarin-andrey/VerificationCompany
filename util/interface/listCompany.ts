@@ -6,7 +6,7 @@ export interface ListCompanyData {
 export interface ListCompanyInterface {
   _id: string;
   title: string;
-  INN: string[] | null;
+  INN: string;
   user: User;
   companyInfo: CompanyInfo;
   finance: Finance;
@@ -37,5 +37,5 @@ export interface Finance {
 export interface User {
   userName?: string;
   userProfession?: string;
-  userAvatar: string;
+  userAvatar: string | null;
 }

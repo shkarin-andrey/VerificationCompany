@@ -12,7 +12,7 @@ export default async function deleteCompany(
 
       if (!id) {
         return res.status(500).json({
-          message: "Не найдено поле id",
+          message: "Поле id не задано",
           success: false,
         });
       }

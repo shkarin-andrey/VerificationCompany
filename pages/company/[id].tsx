@@ -3,13 +3,21 @@ import { GetServerSidePropsContext, NextPage } from "next";
 import axios from "axios";
 import { ListCompanyInterface } from "../../util/interface/listCompany";
 import { Avatar } from "flowbite-react";
+import noAvatar from "../../public/assets/avatars/no-avatar.png";
 
 const Company: NextPage<{ company: ListCompanyInterface }> = ({ company }) => {
   const avatarUserCompany = company.user.userAvatar
-    .split("/")
+    ?.split("/")
     .slice(-1)
     .join("");
-  const pathAvatarUserCompany = require(`../../public/assets/avatars/${avatarUserCompany}`);
+
+  const pathAvatarUserCompany = () => {
+    if (avatarUserCompany) {
+      return require(`../../public/assets/avatars/${avatarUserCompany}`);
+    }
+
+    return;
+  };
 
   return (
     <div className="container mx-auto px-2 sm:px-4">
@@ -27,7 +35,10 @@ const Company: NextPage<{ company: ListCompanyInterface }> = ({ company }) => {
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
           <div>
             <div className="flex justify-center">
-              <Avatar img={pathAvatarUserCompany.default.src} size="xl" />
+              <Avatar
+                img={pathAvatarUserCompany()?.default.src || noAvatar.src}
+                size="xl"
+              />
             </div>
             <div className="text-lg font-bold text-center">
               {company.user.userName}
